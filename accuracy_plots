@@ -189,3 +189,35 @@ additive_conf_plot <- ggplot(cutoff_plot_additive, aes(x = actual, y = predicted
   scale_y_continuous(limits = c(0, 1)) +
   ggtitle(paste0("d.)")) +
   labs(x = "Actual", y = "Predicted", color = "Type")
+
+# Combine the dataframes into one
+combined_cutoff_plot <- rbind(
+  transform(cutoff_plot_makino_l1, source = "Makino-L1-Unit1-2013"),
+  transform(cutoff_plot_makino_l2, source = "Makino-L2-Unit1-2015"),
+  transform(cutoff_plot_makino_l3, source = "Makino-L3-Unit1-2015"),
+  transform(cutoff_plot_additive, source = "All Machines")
+)
+
+# Count the number and calculate the percentage of observations within each source
+to_add <- combined_cutoff_plot |> 
+  group_by(source, type) |>  # Group by source and type
+  summarise(
+    count = n(),  # Count the number of observations
+    .groups = "drop"  # Drop the grouping structure
+  ) |> 
+  group_by(source) |>  # Group by source
+  mutate(
+    total = sum(count),  # Calculate the total count for each source
+    percentage = count / total * 100  # Calculate the percentage for each type within the source
+  ) |> 
+  select(-total) |>  # Remove the total column
+  ungroup()  # Ungroup the data
+
+# Rename columns for better readability
+to_table <- to_add |> 
+  rename(
+    "Source" = source,  # Rename source to Source
+    "Type" = type,  # Rename type to Type
+    "Count" = count,  # Rename count to Count
+    "Percentage" = percentage  # Rename percentage to Percentage
+  )
