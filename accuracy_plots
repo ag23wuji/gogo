@@ -1,0 +1,191 @@
+# Set plot dimensions and random seed
+options(repr.plot.width = 10, repr.plot.height = 10)
+set.seed(2022)
+
+# Define cutoff value
+cutoff <- 0.487194
+
+# For glm_makino_l1 and test_data_makino_l1
+cutoff_plot_makino_l1 <- tibble(
+  predicted = predict(glm_makino_l1, newdata = test_data_makino_l1, type = "response"),
+  actual = as.factor(test_data_makino_l1$downtime)
+) |> 
+  mutate(
+    type = if_else(predicted >= cutoff & actual == 1, "TP",
+                   if_else(predicted >= cutoff & actual == 0, "FP",
+                           if_else(predicted < cutoff & actual == 0, "TN", "FN")))
+  ) |> 
+  filter(type != "NA")
+
+cutoff_plot_makino_l1$type <- as.factor(cutoff_plot_makino_l1$type)
+
+l1_conf_plot <- ggplot(cutoff_plot_makino_l1, aes(x = actual, y = predicted, color = type)) +
+  geom_violin(color = "black") +
+  geom_jitter(shape = 1, size = 3) +  # Increase point size
+  geom_hline(yintercept = cutoff, color = "blue", alpha = 0.5) +
+  scale_y_continuous(limits = c(0, 1)) +
+  ggtitle(paste0("a.)")) +
+  labs(x = "Actual", y = "Predicted", color = "Type")
+
+# For glm_makino_l2 and test_data_makino_l2
+cutoff_plot_makino_l2 <- tibble(
+  predicted = predict(glm_makino_l2, newdata = test_data_makino_l2, type = "response"),
+  actual = as.factor(test_data_makino_l2$downtime)
+) |> 
+  mutate(
+    type = if_else(predicted >= cutoff & actual == 1, "TP",
+                   if_else(predicted >= cutoff & actual == 0, "FP",
+                           if_else(predicted < cutoff & actual == 0, "TN", "FN")))
+  ) |> 
+  filter(type != "NA")
+
+cutoff_plot_makino_l2$type <- as.factor(cutoff_plot_makino_l2$type)
+
+l2_conf_plot <- ggplot(cutoff_plot_makino_l2, aes(x = actual, y = predicted, color = type)) +
+  geom_violin(color = "black") +
+  geom_jitter(shape = 1, size = 3) +  # Increase point size
+  geom_hline(yintercept = cutoff, color = "blue", alpha = 0.5) +
+  scale_y_continuous(limits = c(0, 1)) +
+  ggtitle(paste0("b.)")) +
+  labs(x = "Actual", y = "Predicted", color = "Type")
+
+# For glm_makino_l3 and test_data_makino_l3
+cutoff_plot_makino_l3 <- tibble(
+  predicted = predict(glm_makino_l3, newdata = test_data_makino_l3, type = "response"),
+  actual = as.factor(test_data_makino_l3$downtime)
+) |> 
+  mutate(
+    type = if_else(predicted >= cutoff & actual == 1, "TP",
+                   if_else(predicted >= cutoff & actual == 0, "FP",
+                           if_else(predicted < cutoff & actual == 0, "TN", "FN")))
+  ) |> 
+  filter(type != "NA")
+
+cutoff_plot_makino_l3$type <- as.factor(cutoff_plot_makino_l3$type)
+
+l3_conf_plot <- ggplot(cutoff_plot_makino_l3, aes(x = actual, y = predicted, color = type)) +
+  geom_violin(color = "black") +
+  geom_jitter(shape = 1, size = 3) +  # Increase point size
+  geom_hline(yintercept = cutoff, color = "blue", alpha = 0.5) +
+  scale_y_continuous(limits = c(0, 1)) +
+  ggtitle(paste0("c.)")) +
+  labs(x = "Actual", y = "Predicted", color = "Type")
+
+# For final_glm and test_data
+cutoff_plot_additive <- tibble(
+  predicted = predict(final_glm, newdata = test_data, type = "response"),
+  actual = as.factor(test_data$downtime)
+) |> 
+  mutate(
+    type = if_else(predicted >= cutoff & actual == 1, "TP",
+                   if_else(predicted >= cutoff & actual == 0, "FP",
+                           if_else(predicted < cutoff & actual == 0, "TN", "FN")))
+  ) |> 
+  filter(type != "NA")
+
+cutoff_plot_additive$type <- as.factor(cutoff_plot_additive$type)
+
+additive_conf_plot <- ggplot(cutoff_plot_additive, aes(x = actual, y = predicted, color = type)) +
+  geom_violin(color = "black") +
+  geom_jitter(shape = 1, size = 3) +  # Increase point size
+  geom_hline(yintercept = cutoff, color = "blue", alpha = 0.5) +
+  scale_y_continuous(limits = c(0, 1)) +
+  ggtitle(paste0("d.)")) +
+  labs(x = "Actual", y = "Predicted", color = "Type")
+  
+  #for e.)
+  
+  # Set plot dimensions and random seed
+options(repr.plot.width = 10, repr.plot.height = 10)
+set.seed(2022)
+
+# Define cutoff value
+cutoff <- 0.487194
+
+# For glm_makino_l1 and test_data_makino_l1
+cutoff_plot_makino_l1 <- tibble(
+  predicted = predict(glm_makino_l1, newdata = test_data_makino_l1, type = "response"),
+  actual = as.factor(test_data_makino_l1$downtime)
+) |> 
+  mutate(
+    type = if_else(predicted >= cutoff & actual == 1, "TP",
+                   if_else(predicted >= cutoff & actual == 0, "FP",
+                           if_else(predicted < cutoff & actual == 0, "TN", "FN")))
+  ) |> 
+  filter(type != "NA")
+
+cutoff_plot_makino_l1$type <- as.factor(cutoff_plot_makino_l1$type)
+
+l1_conf_plot <- ggplot(cutoff_plot_makino_l1, aes(x = actual, y = predicted, color = type)) +
+  geom_violin(color = "black") +
+  geom_jitter(shape = 1, size = 3) +  # Increase point size
+  geom_hline(yintercept = cutoff, color = "blue", alpha = 0.5) +
+  scale_y_continuous(limits = c(0, 1)) +
+  ggtitle(paste0("a.)")) +
+  labs(x = "Actual", y = "Predicted", color = "Type")
+
+# For glm_makino_l2 and test_data_makino_l2
+cutoff_plot_makino_l2 <- tibble(
+  predicted = predict(glm_makino_l2, newdata = test_data_makino_l2, type = "response"),
+  actual = as.factor(test_data_makino_l2$downtime)
+) |> 
+  mutate(
+    type = if_else(predicted >= cutoff & actual == 1, "TP",
+                   if_else(predicted >= cutoff & actual == 0, "FP",
+                           if_else(predicted < cutoff & actual == 0, "TN", "FN")))
+  ) |> 
+  filter(type != "NA")
+
+cutoff_plot_makino_l2$type <- as.factor(cutoff_plot_makino_l2$type)
+
+l2_conf_plot <- ggplot(cutoff_plot_makino_l2, aes(x = actual, y = predicted, color = type)) +
+  geom_violin(color = "black") +
+  geom_jitter(shape = 1, size = 3) +  # Increase point size
+  geom_hline(yintercept = cutoff, color = "blue", alpha = 0.5) +
+  scale_y_continuous(limits = c(0, 1)) +
+  ggtitle(paste0("b.)")) +
+  labs(x = "Actual", y = "Predicted", color = "Type")
+
+# For glm_makino_l3 and test_data_makino_l3
+cutoff_plot_makino_l3 <- tibble(
+  predicted = predict(glm_makino_l3, newdata = test_data_makino_l3, type = "response"),
+  actual = as.factor(test_data_makino_l3$downtime)
+) |> 
+  mutate(
+    type = if_else(predicted >= cutoff & actual == 1, "TP",
+                   if_else(predicted >= cutoff & actual == 0, "FP",
+                           if_else(predicted < cutoff & actual == 0, "TN", "FN")))
+  ) |> 
+  filter(type != "NA")
+
+cutoff_plot_makino_l3$type <- as.factor(cutoff_plot_makino_l3$type)
+
+l3_conf_plot <- ggplot(cutoff_plot_makino_l3, aes(x = actual, y = predicted, color = type)) +
+  geom_violin(color = "black") +
+  geom_jitter(shape = 1, size = 3) +  # Increase point size
+  geom_hline(yintercept = cutoff, color = "blue", alpha = 0.5) +
+  scale_y_continuous(limits = c(0, 1)) +
+  ggtitle(paste0("c.)")) +
+  labs(x = "Actual", y = "Predicted", color = "Type")
+
+# For final_glm and test_data
+cutoff_plot_additive <- tibble(
+  predicted = predict(final_glm, newdata = test_data, type = "response"),
+  actual = as.factor(test_data$downtime)
+) |> 
+  mutate(
+    type = if_else(predicted >= cutoff & actual == 1, "TP",
+                   if_else(predicted >= cutoff & actual == 0, "FP",
+                           if_else(predicted < cutoff & actual == 0, "TN", "FN")))
+  ) |> 
+  filter(type != "NA")
+
+cutoff_plot_additive$type <- as.factor(cutoff_plot_additive$type)
+
+additive_conf_plot <- ggplot(cutoff_plot_additive, aes(x = actual, y = predicted, color = type)) +
+  geom_violin(color = "black") +
+  geom_jitter(shape = 1, size = 3) +  # Increase point size
+  geom_hline(yintercept = cutoff, color = "blue", alpha = 0.5) +
+  scale_y_continuous(limits = c(0, 1)) +
+  ggtitle(paste0("d.)")) +
+  labs(x = "Actual", y = "Predicted", color = "Type")
